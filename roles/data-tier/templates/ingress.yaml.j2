@@ -1,0 +1,23 @@
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: data-tier
+  namespace: {{ dt_namespace }}
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-nginx-{{ dt_cert_issuer|lower }}"
+spec:
+  tls:
+  - hosts:
+    - {{ dt_hostname }}
+    secretName: data-tier-tls
+  rules:
+  - host: {{ dt_hostname }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: data-tier
+          servicePort: http

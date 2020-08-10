@@ -1,0 +1,13 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: data-tier
+  namespace: {{ dt_namespace }}
+spec:
+  selector:
+    name: data-tier
+  ports:
+  - name: http
+    port: 80
+    targetPort: http

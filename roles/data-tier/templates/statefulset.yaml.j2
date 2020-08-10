@@ -1,0 +1,89 @@
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: data-tier
+  namespace: {{ dt_namespace }}
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: data-tier
+  serviceName: data-tier
+  template:
+    metadata:
+      name: data-tier
+      labels:
+        name: data-tier
+    spec:
+      serviceAccountName: data-tier
+
+      # A 'preferred' (not guaranteed)
+      # node selection affinity...
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: purpose
+                operator: In
+                values:
+                - {{ dt_node_purpose }}
+
+      containers:
+      - name: data-tier
+        image: {{ dt_image_name }}:{{ dt_image_tag }}
+{% if dt_image_tag in ['latest', 'stable'] %}
+        imagePullPolicy: Always
+{% else %}
+        imagePullPolicy: IfNotPresent
+{% endif %}
+        terminationMessagePolicy: FallbackToLogsOnError
+        ports:
+        - containerPort: 80
+          name: http
+
+        env:
+        - name: EXAMPLE_ENV
+          value: '1'
+        # CICD_TRIGGER_ID is variable whose value is used to force
+        # a redeployment of the underlying containers. This is used in
+        # situations where the origin image's tag may not have changed
+        # (e.g. it's 'latest' or 'stable') but a new build is expected to
+        # be available. Without changing something in the Deployment spec
+        # a roll-out will not occur if the tag has not changed.
+        - name: CICD_TRIGGER_ID
+          value: '{{ ansible_date_time.iso8601_micro }}'
+        readinessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+          periodSeconds: 20
+          successThreshold: 1
+          failureThreshold: 6
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+          periodSeconds: 20
+          successThreshold: 1
+          failureThreshold: 6
+        resources:
+          requests:
+            cpu: {{ dt_cpu_request }}
+            memory: {{ dt_mem_request }}
+{% if dt_cpu_limit or dt_mem_limit %}
+          limits:
+{% if dt_cpu_limit %}
+            cpu: {{ dt_cpu_limit }}
+{% endif %}
+{% if dt_mem_limit %}
+            memory: {{ dt_mem_limit }}
+{% endif %}
+{% endif %}
+
+      imagePullSecrets:
+      - name: data-tier
