@@ -11,7 +11,7 @@ dt_state: present
 dt_namespace: mini-apps-data-tier
 
 # Details of the application container image
-dt_image_name: informaticsmatters/mini-apps-data-tier
+dt_image_name: gitlab.com/informaticsmatters/mini-apps-data-tier
 dt_image_tag: latest
 
 # The ingress hostname (http/https assumed)
