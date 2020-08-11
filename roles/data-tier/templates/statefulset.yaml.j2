@@ -33,7 +33,7 @@ spec:
 
       containers:
       - name: data-tier
-        image: {{ dt_image_name }}:{{ dt_image_tag }}
+        image: {{ dt_image_registry }}/{{ dt_image_name }}:{{ dt_image_tag }}
 {% if dt_image_tag in ['latest', 'stable'] %}
         imagePullPolicy: Always
 {% else %}
