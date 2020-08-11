@@ -12,7 +12,7 @@ dt_namespace: mini-apps-data-tier
 
 # Details of the application container image
 dt_image_name: informaticsmatters/mini-apps-data-tier
-dt_image_tag: '2020.1'
+dt_image_tag: latest
 
 # The ingress hostname (http/https assumed)
 dt_hostname: data.informaticsmatters.org
@@ -21,4 +21,4 @@ dt_hostname: data.informaticsmatters.org
 dt_cert_issuer: production
 
 # The pull-secret
-dt_pull_secret: '00000000'
+dt_pull_secret: SetMe

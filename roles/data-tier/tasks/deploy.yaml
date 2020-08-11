@@ -1,5 +1,12 @@
 ---
 
+# Assert key variables
+- name: Assert key variables
+  assert:
+    that:
+    - dt_pull_secret|string|length > 0
+    - dt_pull_secret|string != 'SetMe'
+
 # Create the namespace and other basic materials
 
 - name: Create namespace ({{ dt_namespace }})
