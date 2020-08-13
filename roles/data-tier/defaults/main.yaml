@@ -21,5 +21,9 @@ dt_hostname: data.informaticsmatters.org
 # One of 'production' or 'staging'
 dt_cert_issuer: production
 
+# The maximum file upload size, '0' implies unlimited.
+# Part of the nginx ingress.
+dt_ingress_proxy_body_size: 100m
+
 # The pull-secret
 dt_pull_secret: SetMe
