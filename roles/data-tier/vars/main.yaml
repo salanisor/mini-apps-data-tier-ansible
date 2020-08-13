@@ -10,8 +10,8 @@ dt_sa_psp: im-core-unrestricted
 # Application CPU and Memory requests and limits.
 # Requests are required but limits are not.
 # Set limit to blank ('') to avoid a limit.
-dt_cpu_request: 100m
-dt_cpu_limit: 100m
+dt_cpu_request: 250m
+dt_cpu_limit: 1000m
 dt_mem_request: 250Mi
 dt_mem_limit: 250Mi
 
