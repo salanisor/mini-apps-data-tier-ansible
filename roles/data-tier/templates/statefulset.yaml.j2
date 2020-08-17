@@ -31,6 +31,14 @@ spec:
                 values:
                 - {{ dt_node_purpose }}
 
+      # To access the mounted datab volume
+      # we set the security context's fsGroup
+      # to the group that will be using the volume
+      # In this case it's the `madt` group in the container
+      # (obtained empirically)
+      securityContext:
+        fsGroup: 1000
+
       containers:
       - name: data-tier
         image: {{ dt_image_registry }}/{{ dt_image_name }}:{{ dt_image_tag }}
