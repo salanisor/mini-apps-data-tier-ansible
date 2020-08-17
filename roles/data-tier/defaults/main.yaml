@@ -32,3 +32,7 @@ dt_pull_secret: SetMe
 # Unless changed ' ' implies the default storage class
 dt_data_volume_storageclass: ' '
 dt_data_volume_size_g: 10
+
+# The role users are expected to have in order to use the data-tier.
+# This is a role, expected in the Keycloak realm for mini-app users.
+dt_required_role: standard-user

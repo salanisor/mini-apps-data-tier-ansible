@@ -46,6 +46,8 @@ spec:
         env:
         - name: DATA_ROOT
           value: /data
+        - name: REQUIRED_ROLE
+          value: {{ dt_required_role }}
         # CICD_TRIGGER_ID is variable whose value is used to force
         # a redeployment of the underlying containers. This is used in
         # situations where the origin image's tag may not have changed
