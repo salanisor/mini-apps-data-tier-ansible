@@ -29,6 +29,14 @@
     definition: "{{ lookup('template', 'rolebinding-default-sa.yaml.j2') }}"
     wait: yes
 
+# Deploy storage
+
+- name: Create data storage
+  k8s:
+    definition: "{{ lookup('template', 'pvc.yaml.j2') }}"
+    wait: yes
+    wait_timeout: "{{ wait_timeout }}"
+
 # Deploy the application...
 
 - name: Deploy application

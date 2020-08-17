@@ -27,3 +27,8 @@ dt_ingress_proxy_body_size: 100m
 
 # The pull-secret
 dt_pull_secret: SetMe
+
+# The data volume storage class and size (Gi).
+# Unless changed ' ' implies the default storage class
+dt_data_volume_storageclass: ' '
+dt_data_volume_size_g: 10

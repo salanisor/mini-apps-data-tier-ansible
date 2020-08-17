@@ -43,10 +43,9 @@ spec:
         ports:
         - containerPort: 8080
           name: http
-
         env:
-        - name: EXAMPLE_ENV
-          value: '1'
+        - name: DATA_ROOT
+          value: /data
         # CICD_TRIGGER_ID is variable whose value is used to force
         # a redeployment of the underlying containers. This is used in
         # situations where the origin image's tag may not have changed
@@ -84,6 +83,14 @@ spec:
             memory: {{ dt_mem_limit }}
 {% endif %}
 {% endif %}
+        volumeMounts:
+        - mountPath: /data
+          name: data
+
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: data
 
       imagePullSecrets:
       - name: data-tier

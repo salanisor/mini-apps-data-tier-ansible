@@ -1,0 +1,13 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: data
+  namespace: {{ dt_namespace }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: '{{ dt_data_volume_storageclass }}'
+  resources:
+    requests:
+      storage: '{{ dt_data_volume_size_g }}Gi'
