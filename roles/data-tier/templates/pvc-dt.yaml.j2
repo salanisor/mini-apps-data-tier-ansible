@@ -7,7 +7,9 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: '{{ dt_data_volume_storageclass }}'
+{% if dt_data_volume_storageclass != ' ' %}
+  storageClassName: {{ dt_data_volume_storageclass }}
+{% endif %}
   resources:
     requests:
       storage: '{{ dt_data_volume_size_g }}Gi'

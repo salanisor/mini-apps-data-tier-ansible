@@ -15,6 +15,10 @@ dt_image_registry: registry.gitlab.com
 dt_image_name: informaticsmatters/mini-apps-data-tier
 dt_image_tag: latest
 
+dt_database_image_registry: docker.io
+dt_database_image_name: informaticsmatters/rdkit-cartridge-debian
+dt_database_image_tag: Release_2020_03_4
+
 # The ingress hostname (http/https assumed)
 dt_hostname: data.informaticsmatters.org
 # The ingress "let's Encrypt" certificate issuer.
@@ -33,6 +37,8 @@ dt_pull_secret: SetMe
 dt_data_volume_storageclass: ' '
 dt_data_volume_size_g: 10
 
-# The role users are expected to have in order to use the data-tier.
-# This is a role, expected in the Keycloak realm for mini-app users.
-dt_required_role: standard-user
+# Database configuration
+dt_database_volume_storageclass: ' '
+dt_database_volume_size_g: 5
+dt_database_user_password: "{{ lookup('password', '/dev/null length=12 chars=ascii_letters') }}"
+dt_database_data_tier_user_password: "{{ lookup('password', '/dev/null length=14 chars=ascii_letters') }}"
