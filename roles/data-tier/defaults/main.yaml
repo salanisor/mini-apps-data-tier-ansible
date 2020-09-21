@@ -17,7 +17,7 @@ dt_image_tag: latest
 
 dt_database_image_registry: docker.io
 dt_database_image_name: informaticsmatters/rdkit-cartridge-debian
-dt_database_image_tag: 2020_03_4
+dt_database_image_tag: Release_2020_03_4
 
 # The ingress hostname (http/https assumed)
 dt_hostname: data.informaticsmatters.org
