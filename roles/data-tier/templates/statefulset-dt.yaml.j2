@@ -60,6 +60,8 @@ spec:
           value: database.{{ dt_namespace }}.svc
         - name: DATABASE_PORT
           value: '5432'
+        - name: DATABASE_DATA_TIER_NAME
+          value: datatier
         - name: DATABASE_DATA_TIER_USER
           value: datatier
         - name: DATABASE_DATA_TIER_USER_PASSWORD
@@ -88,7 +90,7 @@ spec:
             port: 8080
           initialDelaySeconds: 5
           timeoutSeconds: 3
-          periodSeconds: 15
+          periodSeconds: 60
           successThreshold: 1
           failureThreshold: 3
         resources:
