@@ -56,13 +56,13 @@ spec:
           value: /data
         - name: REQUIRED_ROLE
           value: {{ dt_required_role }}
-        - name: DATABASE_HOSTNAME:
+        - name: DATABASE_HOSTNAME
           value: database.{{ dt_namespace }}.svc
-        - name: DATABASE_PORT:
+        - name: DATABASE_PORT
           value: 5432
-        - name: DATABASE_DATA_TIER_USER:
+        - name: DATABASE_DATA_TIER_USER
           value: datatier
-        - name: DATABASE_DATA_TIER_USER_PASSWORD:
+        - name: DATABASE_DATA_TIER_USER_PASSWORD
           valueFrom:
             secretKeyRef:
               name: database
