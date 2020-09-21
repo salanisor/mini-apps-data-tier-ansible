@@ -33,7 +33,7 @@ spec:
 
       containers:
       - name: database
-        image: {{ dt_database_image_registry }}/{{ dt_database_image }}:{{ dt_database_image_tag }}
+        image: {{ dt_database_image_registry }}/{{ dt_database_image_name }}:{{ dt_database_image_tag }}
 {% if dt_database_image_tag in ['latest', 'stable'] %}
         imagePullPolicy: Always
 {% else %}
