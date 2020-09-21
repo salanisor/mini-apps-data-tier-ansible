@@ -49,10 +49,10 @@ spec:
 {% if dt_database_cpu_limit or dt_database_mem_limit %}
           limits:
 {% if dt_database_cpu_limit %}
-            cpu: {{ dt_cpu_limit }}
+            cpu: {{ dt_database_cpu_limit }}
 {% endif %}
 {% if dt_database_mem_limit %}
-            memory: {{ dt_mem_limit }}
+            memory: {{ dt_database_mem_limit }}
 {% endif %}
 {% endif %}
         readinessProbe:
