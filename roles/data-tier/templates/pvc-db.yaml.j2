@@ -1,0 +1,15 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: database
+  namespace: {{ dt_namespace }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+{% if dt_database_volume_storageclass != ' ' %}
+  storageClassName: {{ dt_database_volume_storageclass }}
+{% endif %}
+  resources:
+    requests:
+      storage: '{{ dt_database_volume_size_g }}Gi'

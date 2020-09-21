@@ -6,9 +6,10 @@ yaml-files:
 - '.yamllint'
 
 ignore: |
-  roles/data-tier/templates/deployment.yaml.j2
-  roles/data-tier/templates/job.yaml.j2
-  roles/data-tier/templates/statefulset.yaml.j2
+  roles/data-tier/templates/pvc-db.yaml.j2
+  roles/data-tier/templates/pvc-dt.yaml.j2
+  roles/data-tier/templates/statefulset-db.yaml.j2
+  roles/data-tier/templates/statefulset-dt.yaml.j2
 
 rules:
   indentation:

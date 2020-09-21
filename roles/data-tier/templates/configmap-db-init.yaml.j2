@@ -1,0 +1,25 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: database-init
+  namespace: {{ dt_namespace }}
+data:
+  init-postgres-db.sh: |
+    #!/bin/bash
+
+    export PGUSER=${POSTGRES_USER:-postgres}
+    export PGPASSWORD=${POSTGRES_PASSWORD}
+
+    echo "Creating datatier user"
+    psql --command "CREATE USER datatier"
+    psql --command "ALTER USER datatier WITH PASSWORD '${POSTGRES_DATA_TIER_PASSWORD}'"
+    echo "datatier user created with password ${POSTGRES_DATA_TIER_PASSWORD}"
+
+    echo "Creating datatier database"
+    createdb -O datatier datatier
+    echo "datatier database created"
+
+    echo "Deploying RDKit cartridge to datatier"
+    psql --command 'create extension rdkit' datatier
+    echo "RDKit cartridge deployed to datatier"

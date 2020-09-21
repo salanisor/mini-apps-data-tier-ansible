@@ -1,0 +1,95 @@
+---
+
+# Deploys the data-tier RDKit database.
+
+# Check and create database secrets
+
+- name: Check database secrets
+  k8s_info:
+    kind: Secret
+    api_version: v1
+    namespace: "{{ dt_namespace }}"
+    name: database
+  register: s_result
+
+- name: Set database secret facts
+  set_fact:
+    dt_database_user_password_fact: "{{ dt_database_user_password }}"
+    dt_database_data_tier_user_password_fact: "{{ dt_database_data_tier_user_password }}"
+  when: s_result.resources|length == 0
+
+- name: Set database secret facts (pre-deployed secrets)
+  set_fact:
+    dt_database_user_password_fact: "{{ s_result.resources[0].data.user_password|b64decode }}"
+    dt_database_data_tier_user_password_fact: "{{ s_result.resources[0].data.data_tier_user_password|b64decode }}"
+  when: s_result.resources|length == 1
+
+- name: Write database secrets
+  k8s:
+    definition: "{{ lookup('template', 'secret-db.yaml.j2') }}"
+    wait: yes
+  when: s_result.resources|length == 0
+
+# The database volume (and storage class checks)
+
+- name: Get {{ dt_database_volume_storageclass }} StorageClass
+  k8s_info:
+    kind: StorageClass
+    name: "{{ dt_database_volume_storageclass }}"
+  register: sc_result
+  when: dt_database_volume_storageclass != ' '
+
+- name: Assert {{ dt_database_volume_storageclass }} StorageClass
+  assert:
+    that: sc_result.resources|length == 1
+    fail_msg: The {{ dt_database_volume_storageclass }} StorageClass must be available on the cluster
+  when: dt_database_volume_storageclass != ' '
+
+- name: Create database volume claim
+  k8s:
+    definition: "{{ lookup('template', 'pvc-db.yaml.j2') }}"
+    wait: yes
+    wait_timeout: "{{ wait_timeout }}"
+
+# Best practice ... wait for the PVC to bind.
+# e.g. wait until resources[0].status.phase == Bound (initially Pending)
+
+- name: Wait for database volume claim to bind
+  k8s_info:
+    kind: PersistentVolumeClaim
+    name: database
+    namespace: "{{ dt_namespace }}"
+  register: database_result
+  until: >-
+    database_result.resources|length > 0
+    and database_result.resources[0].status is defined
+    and database_result.resources[0].status.phase == 'Bound'
+  delay: 5
+  retries: "{{ (bind_timeout|int / 5)|int }}"
+  when: bind_timeout|int > 0
+
+# Deploy the DataTier database
+
+- name: Create database
+  k8s:
+    definition: "{{ lookup('template', '{{ item }}.yaml.j2') }}"
+    wait: yes
+  loop:
+  - configmap-db-init
+  - statefulset-db
+  - service-db
+
+- name: Wait for database to become Ready
+  k8s_info:
+    kind: Pod
+    name: database-0
+    namespace: "{{ dt_namespace }}"
+  register: database_result
+  until: >-
+    database_result.resources|length == 1
+    and database_result.resources[0].status is defined
+    and database_result.resources[0].status.containerStatuses is defined
+    and database_result.resources[0].status.containerStatuses|length == 1
+    and database_result.resources[0].status.containerStatuses[0].ready
+  delay: 15
+  retries: "{{ (wait_timeout|int / 15)|int }}"

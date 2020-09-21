@@ -1,7 +1,7 @@
 ---
 
-# Less commonly application variables -
-# things the user is less-like to want to change (but can).
+# Less common application variables -
+# Things the user is less-like to want to change (but can).
 # This is here to avoid clutter in 'defaults/main.yaml'
 
 # The application Pod Security Policy (PSP)
@@ -15,11 +15,21 @@ dt_cpu_limit: 1000m
 dt_mem_request: 250Mi
 dt_mem_limit: 250Mi
 
+dt_database_cpu_request: 250m
+dt_database_cpu_limit: 1000m
+dt_database_mem_request: 500Mi
+dt_database_mem_limit: 4Gi
+
 # A request for a suitable node, based on node labels.
 # Here we would like nodes labelled 'purpose=application'...
 dt_node_purpose: application
 
+# The role users are expected to have in order to use the data-tier.
+# This is a role, expected in the Keycloak realm for mini-app users.
+dt_required_role: standard-user
+
 # General variables
 
 wait_timeout: 120
+bind_timeout: 0
 pod_ready_timeout: 600
