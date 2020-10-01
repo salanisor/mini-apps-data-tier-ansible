@@ -18,25 +18,16 @@ spec:
     spec:
       serviceAccountName: data-tier
 
-      # Avoid 'worker' nodes
-      # and prefer 'application' nodes
+      # We must have a 'core' node
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
               - key: informaticsmatters.com/purpose
-                operator: NotIn
-                values:
-                - worker
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            preference:
-              matchExpressions:
-              - key: informaticsmatters.com/purpose
                 operator: In
                 values:
-                - application
+                - core
 
       # To access the mounted data volume
       # we set the security context's fsGroup
