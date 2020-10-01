@@ -11,14 +11,14 @@ dt_sa_psp: im-core-unrestricted
 # Requests are required but limits are not.
 # Set limit to blank ('') to avoid a limit.
 dt_cpu_request: 250m
-dt_cpu_limit: 1000m
+dt_cpu_limit: 500m
 dt_mem_request: 250Mi
 dt_mem_limit: 250Mi
 
-dt_database_cpu_request: 250m
-dt_database_cpu_limit: 1000m
-dt_database_mem_request: 500Mi
-dt_database_mem_limit: 4Gi
+dt_database_cpu_request: 100m
+dt_database_cpu_limit: 500m
+dt_database_mem_request: 250Mi
+dt_database_mem_limit: 1Gi
 
 # The role users are expected to have in order to use the data-tier.
 # This is a role, expected in the Keycloak realm for mini-app users.
