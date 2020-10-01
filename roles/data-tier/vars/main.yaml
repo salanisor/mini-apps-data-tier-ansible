@@ -20,10 +20,6 @@ dt_database_cpu_limit: 1000m
 dt_database_mem_request: 500Mi
 dt_database_mem_limit: 4Gi
 
-# A request for a suitable node, based on node labels.
-# Here we would like nodes labelled 'purpose=application'...
-dt_node_purpose: application
-
 # The role users are expected to have in order to use the data-tier.
 # This is a role, expected in the Keycloak realm for mini-app users.
 dt_required_role: standard-user
