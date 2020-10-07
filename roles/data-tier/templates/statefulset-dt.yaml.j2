@@ -67,6 +67,8 @@ spec:
             secretKeyRef:
               name: database
               key: data_tier_user_password
+        - name: SWAGGER_UI_BASE_PATH
+          value: {{ dt_hostname_path }}/
         # CICD_TRIGGER_ID is variable whose value is used to force
         # a redeployment of the underlying containers. This is used in
         # situations where the origin image's tag may not have changed
