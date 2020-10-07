@@ -20,7 +20,7 @@ spec:
   - host: {{ dt_hostname }}
     http:
       paths:
-      - path: /
+      - path: /{{ dt_hostname_path }}
         backend:
           serviceName: data-tier
           servicePort: http

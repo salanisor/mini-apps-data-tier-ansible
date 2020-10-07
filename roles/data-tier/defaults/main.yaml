@@ -19,8 +19,9 @@ dt_database_image_registry: docker.io
 dt_database_image_name: informaticsmatters/rdkit-cartridge-debian
 dt_database_image_tag: Release_2020_03_4
 
-# The ingress hostname (http/https assumed)
-dt_hostname: data.informaticsmatters.org
+# The ingress hostname and path (http/https assumed)
+dt_hostname: squonk.it
+dt_hostname_path: data
 # The ingress "let's Encrypt" certificate issuer.
 # One of 'production' or 'staging'
 dt_cert_issuer: production
