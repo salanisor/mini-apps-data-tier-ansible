@@ -50,25 +50,12 @@ spec:
         - containerPort: 8080
           name: http
         env:
-        - name: DATA_ROOT
-          value: /data
         - name: REQUIRED_ROLE
           value: {{ dt_required_role }}
-        - name: DATABASE_HOSTNAME
+        - name: DT_DATABASE_HOST
           value: database.{{ dt_namespace }}.svc
-        - name: DATABASE_PORT
-          value: '5432'
-        - name: DATABASE_DATA_TIER_NAME
-          value: datatier
-        - name: DATABASE_DATA_TIER_USER
-          value: datatier
-        - name: DATABASE_DATA_TIER_USER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: database
-              key: data_tier_user_password
-        - name: SWAGGER_UI_BASE_PATH
-          value: {{ dt_hostname_path }}/
+        - name: DT_SQLALCHEMY_DATABASE_URI
+          value: postgresql://datatier:{{ dt_database_data_tier_user_password_fact }}@database.{{ dt_namespace }}.svc:5432/datatier
         # CICD_TRIGGER_ID is variable whose value is used to force
         # a redeployment of the underlying containers. This is used in
         # situations where the origin image's tag may not have changed

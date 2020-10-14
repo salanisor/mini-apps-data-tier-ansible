@@ -12,7 +12,7 @@ dt_namespace: mini-apps-data-tier
 
 # Details of the application container image
 dt_image_registry: registry.gitlab.com
-dt_image_name: informaticsmatters/mini-apps-data-tier
+dt_image_name: informaticsmatters/mini-apps-data-tier/data-tier
 dt_image_tag: latest
 
 dt_database_image_registry: docker.io

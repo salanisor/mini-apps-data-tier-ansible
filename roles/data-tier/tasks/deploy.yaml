@@ -22,7 +22,6 @@
   - serviceaccount
   - role
   - rolebinding-role-sa
-  - limitrange
 
 - name: Relax ({{ dt_namespace }} 'default' service account (for cert-manager)
   k8s:
