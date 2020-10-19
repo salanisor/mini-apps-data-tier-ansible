@@ -24,6 +24,10 @@ dt_database_mem_limit: 1Gi
 # This is a role, expected in the Keycloak realm for mini-app users.
 dt_required_role: standard-user
 
+# Sentry DSN.
+# Set to enable integration with the Sentry SDK.
+dt_sentry_dsn: ''
+
 # General variables
 
 wait_timeout: 120
