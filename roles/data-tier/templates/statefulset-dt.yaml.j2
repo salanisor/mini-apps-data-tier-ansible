@@ -55,7 +55,7 @@ spec:
         - name: DT_DATABASE_HOST
           value: database.{{ dt_namespace }}.svc
         - name: DT_API_PATH
-          value: '{{ dt_hostname_path }}'
+          value: '{{ dt_hostname_path }}/'
         - name: DT_SQLALCHEMY_DATABASE_URI
           value: postgresql://datatier:{{ dt_database_data_tier_user_password_fact }}@database.{{ dt_namespace }}.svc:5432/datatier
         # CICD_TRIGGER_ID is variable whose value is used to force
