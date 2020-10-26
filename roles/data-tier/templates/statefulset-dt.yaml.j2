@@ -59,7 +59,7 @@ spec:
         - name: DT_SENTRY_DSN
           value: '{{ dt_sentry_dsn }}'
         - name: DT_API_HOSTNAME
-          NAME: '{{ dt_hostname }}'
+          value: '{{ dt_hostname }}'
         # CICD_TRIGGER_ID is variable whose value is used to force
         # a redeployment of the underlying containers. This is used in
         # situations where the origin image's tag may not have changed
