@@ -50,6 +50,8 @@ spec:
         - containerPort: 8080
           name: http
         env:
+        - name: IMAGE_ROLE
+          value: DataTier
         - name: REQUIRED_ROLE
           value: {{ dt_required_role }}
         - name: DT_DATABASE_HOST
