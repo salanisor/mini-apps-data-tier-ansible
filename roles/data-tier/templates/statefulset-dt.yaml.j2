@@ -59,8 +59,10 @@ spec:
         env:
         - name: IMAGE_ROLE
           value: DataTier
-        - name: CELERY_DATABASE_URI
+        - name: CELERY_RESULT_BACKEND
           value: db+postgresql://datatier:{{ dt_database_data_tier_user_password_fact }}@database.{{ dt_namespace }}.svc:5432/datatier
+        - name: CELERY_BROKER_URL
+          value: amqp://guest:guest@localhost:5672//
         - name: REQUIRED_ROLE
           value: {{ dt_required_role }}
         - name: DT_DATABASE_HOST
@@ -123,8 +125,10 @@ spec:
         env:
         - name: IMAGE_ROLE
           value: DataTierWorker
-        - name: CELERY_DATABASE_URI
+        - name: CELERY_RESULT_BACKEND
           value: db+postgresql://datatier:{{ dt_database_data_tier_user_password_fact }}@database.{{ dt_namespace }}.svc:5432/datatier
+        - name: CELERY_BROKER_URL
+          value: amqp://guest:guest@localhost:5672//
         - name: DT_DATABASE_HOST
           value: database.{{ dt_namespace }}.svc
         - name: DT_SQLALCHEMY_DATABASE_URI
