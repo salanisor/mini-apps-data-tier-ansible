@@ -37,7 +37,14 @@ spec:
       securityContext:
         fsGroup: 1000
 
+      # Implementation currently relies on three closely-related
+      # container images:-
+      #   The Data Tier
+      #   The Data Tier Celery-based Task Worker
+      #   The Celery Message Broker (RabbitMQ)
+      # The Data Tier and Task Worker share a data volume
       containers:
+
       - name: data-tier
         image: {{ dt_image_registry }}/{{ dt_image_name }}:{{ dt_image_tag }}
 {% if dt_image_tag in ['latest', 'stable'] %}
@@ -52,6 +59,8 @@ spec:
         env:
         - name: IMAGE_ROLE
           value: DataTier
+        - name: CELERY_DATABASE_URI
+          value: db+postgresql://datatier:{{ dt_database_data_tier_user_password_fact }}@database.{{ dt_namespace }}.svc:5432/datatier
         - name: REQUIRED_ROLE
           value: {{ dt_required_role }}
         - name: DT_DATABASE_HOST
@@ -102,6 +111,66 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: data
+
+      - name: celery-worker
+        image: {{ dt_image_registry }}/{{ dt_image_name }}:{{ dt_image_tag }}
+{% if dt_image_tag in ['latest', 'stable'] %}
+        imagePullPolicy: Always
+{% else %}
+        imagePullPolicy: IfNotPresent
+{% endif %}
+        terminationMessagePolicy: FallbackToLogsOnError
+        env:
+        - name: IMAGE_ROLE
+          value: DataTierWorker
+        - name: CELERY_DATABASE_URI
+          value: db+postgresql://datatier:{{ dt_database_data_tier_user_password_fact }}@database.{{ dt_namespace }}.svc:5432/datatier
+        - name: DT_DATABASE_HOST
+          value: database.{{ dt_namespace }}.svc
+        - name: DT_SQLALCHEMY_DATABASE_URI
+          value: postgresql://datatier:{{ dt_database_data_tier_user_password_fact }}@database.{{ dt_namespace }}.svc:5432/datatier
+        # CICD_TRIGGER_ID is variable whose value is used to force
+        # a redeployment of the underlying containers. This is used in
+        # situations where the origin image's tag may not have changed
+        # (e.g. it's 'latest' or 'stable') but a new build is expected to
+        # be available. Without changing something in the Deployment spec
+        # a roll-out will not occur if the tag has not changed.
+        - name: CICD_TRIGGER_ID
+          value: '{{ ansible_date_time.iso8601_micro }}'
+        resources:
+          requests:
+            cpu: {{ dt_w_cpu_request }}
+            memory: {{ dt_w_mem_request }}
+{% if dt_w_cpu_limit or dt_w_mem_limit %}
+          limits:
+{% if dt_w_cpu_limit %}
+            cpu: {{ dt_w_cpu_limit }}
+{% endif %}
+{% if dt_w_mem_limit %}
+            memory: {{ dt_w_mem_limit }}
+{% endif %}
+{% endif %}
+        volumeMounts:
+        - mountPath: /data
+          name: data
+
+      - name: celery-msg-broker
+        image: {{ dt_mb_image }}
+        imagePullPolicy: IfNotPresent
+        terminationMessagePolicy: FallbackToLogsOnError
+        resources:
+          requests:
+            cpu: {{ dt_mb_cpu_request }}
+            memory: {{ dt_mb_mem_request }}
+{% if dt_mb_cpu_limit or dt_mb_mem_limit %}
+          limits:
+{% if dt_mb_cpu_limit %}
+            cpu: {{ dt_mb_cpu_limit }}
+{% endif %}
+{% if dt_mb_mem_limit %}
+            memory: {{ dt_mb_mem_limit }}
+{% endif %}
+{% endif %}
 
       volumes:
       - name: data
