@@ -9,6 +9,7 @@ ignore: |
   .github/
   roles/data-tier/templates/pvc-db.yaml.j2
   roles/data-tier/templates/pvc-dt.yaml.j2
+  roles/data-tier/templates/serviceaccount.yaml.j2
   roles/data-tier/templates/statefulset-db.yaml.j2
   roles/data-tier/templates/statefulset-dt.yaml.j2
 
