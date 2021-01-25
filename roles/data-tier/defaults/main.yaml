@@ -42,3 +42,10 @@ dt_database_volume_storageclass: ' '
 dt_database_volume_size_g: 5
 dt_database_user_password: "{{ lookup('password', '/dev/null length=12 chars=ascii_letters') }}"
 dt_database_data_tier_user_password: "{{ lookup('password', '/dev/null length=14 chars=ascii_letters') }}"
+
+# A pull-secret for public images pulled from DockerHub.
+# If set this is the base-64 string that can be used as the value
+# in our Kubernetes Secret as the .dockerconfigjson value.
+# If set it is applied to the ServiceAccount in the namespace
+# and applied to Pods that use that namespace.
+dt_dockerhub_pullsecret: ''
