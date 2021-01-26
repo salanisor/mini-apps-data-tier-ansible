@@ -40,4 +40,4 @@
 # Defer next actions to database and data-tier logic...
 
 - include_tasks: deploy-database.yaml
-- include_tasks: deploy-data-tier.yaml
+- include_tasks: deploy-data-manager-api.yaml

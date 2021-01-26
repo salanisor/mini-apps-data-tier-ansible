@@ -2,11 +2,11 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: data-tier
+  name: data-manager-api
   namespace: {{ dt_namespace }}
 spec:
   selector:
-    name: data-tier
+    name: data-manager-api
   ports:
   - name: http
     port: 80

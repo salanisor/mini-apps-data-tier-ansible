@@ -2,11 +2,11 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: data-tier
+  name: data-manager-api
   namespace: {{ dt_namespace }}
 roleRef:
   kind: Role
-  name: data-tier-psp
+  name: data-manager-api-psp
   apiGroup: rbac.authorization.k8s.io
 subjects:
 - kind: ServiceAccount

@@ -2,21 +2,21 @@
 kind: StatefulSet
 apiVersion: apps/v1
 metadata:
-  name: data-tier
+  name: data-manager-api
   namespace: {{ dt_namespace }}
 spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      name: data-tier
-  serviceName: data-tier
+      name: data-manager-api
+  serviceName: data-manager-api
   template:
     metadata:
-      name: data-tier
+      name: data-manager-api
       labels:
-        name: data-tier
+        name: data-manager-api
     spec:
-      serviceAccountName: data-tier
+      serviceAccountName: data-manager-api
 
       # We must have a 'core' node
       affinity:
@@ -39,13 +39,13 @@ spec:
 
       # Implementation currently relies on three closely-related
       # container images:-
-      #   The Data Tier
+      #   The Data Tier Manager API
       #   The Data Tier Celery-based Task Worker
       #   The Celery Message Broker (RabbitMQ)
       # The Data Tier and Task Worker share a data volume
       containers:
 
-      - name: data-tier
+      - name: data-manager-api
         image: {{ dt_image_registry }}/{{ dt_image_name }}:{{ dt_image_tag }}
 {% if dt_image_tag in ['latest', 'stable'] %}
         imagePullPolicy: Always
@@ -182,4 +182,4 @@ spec:
           claimName: data
 
       imagePullSecrets:
-      - name: data-tier
+      - name: data-manager-api

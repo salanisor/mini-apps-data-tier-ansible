@@ -8,7 +8,7 @@
 dt_state: present
 
 # The namespace to create for application deployment.
-dt_namespace: mini-apps-data-tier
+dt_namespace: data-manager-api
 
 # Details of the application container image
 dt_image_registry: registry.gitlab.com
@@ -19,8 +19,9 @@ dt_database_image_registry: docker.io
 dt_database_image_name: informaticsmatters/rdkit-cartridge-debian
 dt_database_image_tag: Release_2020_03_4
 
-# The ingress hostname and path (http/https assumed)
+# The ingress hostname and path (https assumed)
 dt_hostname: squonk.it
+dt_hostname_path: data-manager-api
 # The ingress "let's Encrypt" certificate issuer.
 # One of 'production' or 'staging'
 dt_cert_issuer: production

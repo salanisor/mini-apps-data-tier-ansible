@@ -2,13 +2,13 @@
 kind: Ingress
 apiVersion: networking.k8s.io/v1beta1
 metadata:
-  name: data-tier
+  name: data-manager-api
   namespace: {{ dt_namespace }}
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-nginx-{{ dt_cert_issuer|lower }}"
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /data
+    nginx.ingress.kubernetes.io/rewrite-target: /{{ dt_hostname_path }}
     nginx.ingress.kubernetes.io/proxy-body-size: "{{ dt_ingress_proxy_body_size }}"
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
@@ -16,12 +16,12 @@ spec:
   tls:
   - hosts:
     - {{ dt_hostname }}
-    secretName: data-tier-tls
+    secretName: data-manager-api-tls
   rules:
   - host: {{ dt_hostname }}
     http:
       paths:
-      - path: /data
+      - path: /{{ dt_hostname_path }}
         backend:
-          serviceName: data-tier
+          serviceName: data-manager-api
           servicePort: http
