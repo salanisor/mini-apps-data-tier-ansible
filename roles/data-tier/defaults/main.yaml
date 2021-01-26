@@ -21,7 +21,6 @@ dt_database_image_tag: Release_2020_03_4
 
 # The ingress hostname and path (https assumed)
 dt_hostname: squonk.it
-dt_hostname_path: data-manager-api
 # The ingress "let's Encrypt" certificate issuer.
 # One of 'production' or 'staging'
 dt_cert_issuer: production
