@@ -13,17 +13,17 @@ dt_mb_image: rabbitmq:3.6.16-alpine
 # Application CPU and Memory requests and limits.
 # Requests are required but limits are not.
 # Set limit to blank ('') to avoid a limit.
-dt_cpu_request: 1
+dt_cpu_request: 100m
 dt_cpu_limit: 1
 dt_mem_request: 500Mi
 dt_mem_limit: 0
 
-dt_w_cpu_request: 1
+dt_w_cpu_request: 100m
 dt_w_cpu_limit: 1
 dt_w_mem_request: 500Mi
 dt_w_mem_limit: 0
 
-dt_mb_cpu_request: 500m
+dt_mb_cpu_request: 100m
 dt_mb_cpu_limit: 500m
 dt_mb_mem_request: 128Mi
 dt_mb_mem_limit: 0
