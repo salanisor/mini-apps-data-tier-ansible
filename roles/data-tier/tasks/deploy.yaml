@@ -30,7 +30,9 @@
   loop:
   - serviceaccount
   - role
+  - role-pod-runner
   - rolebinding-role-sa
+  - rolebinding-role-pod-runner-sa
 
 - name: Relax ({{ dt_namespace }} 'default' service account (for cert-manager)
   k8s:
