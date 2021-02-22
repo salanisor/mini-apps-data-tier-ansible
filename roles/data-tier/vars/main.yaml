@@ -8,7 +8,7 @@
 dt_sa_psp: im-core-unrestricted
 
 # Celery message-broker image
-dt_mb_image: rabbitmq:3.6.16-alpine
+dt_mb_image: rabbitmq:3.8.12-alpine
 
 # Application CPU and Memory requests and limits.
 # Requests are required but limits are not.
