@@ -113,8 +113,8 @@ spec:
 {% endif %}
 {% endif %}
         volumeMounts:
-        - mountPath: /data
-          name: data
+        - mountPath: /dataset
+          name: dataset
 
       - name: celery-worker
         image: {{ dt_image_registry }}/{{ dt_image_name }}:{{ dt_image_tag }}
@@ -157,8 +157,8 @@ spec:
 {% endif %}
 {% endif %}
         volumeMounts:
-        - mountPath: /data
-          name: data
+        - mountPath: /dataset
+          name: dataset
 
       - name: celery-msg-broker
         image: {{ dt_mb_image }}
@@ -179,9 +179,9 @@ spec:
 {% endif %}
 
       volumes:
-      - name: data
+      - name: dataset
         persistentVolumeClaim:
-          claimName: data
+          claimName: dataset
 
       imagePullSecrets:
       - name: data-manager-api
