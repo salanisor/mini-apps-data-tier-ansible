@@ -116,7 +116,7 @@ spec:
         - mountPath: /dataset
           name: dataset
 
-      - name: celery-worker
+      - name: data-manager-worker
         image: {{ dt_image_registry }}/{{ dt_image_name }}:{{ dt_image_tag }}
 {% if dt_image_tag in ['latest', 'stable'] %}
         imagePullPolicy: Always
